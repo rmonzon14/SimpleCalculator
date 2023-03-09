@@ -26,12 +26,50 @@ operator.forEach((operatorBtn) => {
     })
 });
 
+let chosenOperator = '';
+
 function operate(operator) {
-    if (newNum != '') {
+    if (newNum != '' && operator != '=') {
+        chosenOperator = operator;
         displayNewNumber.textContent = '';
         oldNum = newNum;
         newNum = '';
         displayOldNumber.textContent += `${oldNum + ' ' + operator + ' '}`;
     }
-
 }
+
+function calculate() {
+    oldNum = Number(oldNum);
+    newNum = Number(newNum);
+
+    if (chosenOperator === '+') {
+        oldNum =+ newNum;
+    } else if (chosenOperator === '-') {
+        oldNum = oldNum - newNum;
+    } else if (chosenOperator === 'x') {
+        oldNum = oldNum * newNum;
+    } else if (chosenOperator === '/') {  
+        oldNum = oldNum / newNum;
+    }
+    console.log(oldNum);
+}
+
+const equal = document.getElementById('equal');
+
+equal.addEventListener('click', () => {
+    if (newNum.length != 0 && oldNum.length != 0) {
+        calculate();
+    }
+});
+
+const clear = document.getElementsByClassName('clear')[0];
+
+clear.addEventListener('click', reset);
+
+function reset() {
+    newNum = '';
+    oldNum = '';
+    displayNewNumber.textContent = '0';
+    displayOldNumber.textContent = '';
+}
+
